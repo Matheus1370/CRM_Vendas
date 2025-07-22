@@ -1,66 +1,128 @@
-<script setup>
-</script>
 <template>
-    <v-main>
-        <v-container 
-            class="fill-height d-flex bg-login" 
-            fluid="true"
-        >
-            <div class="gradientOverlay"></div>
-            <v-row>
-                <v-col cols="4" offset="4">
-                    <v-card 
-                        variant="outlined"
-                        style="background-color: rgba(255, 255, 255, 0.2);"
-                        class="pa-8 rounded-xl"
-                    >
-                        <v-card-text class="text-center text-h3 font-weight-bold">Login</v-card-text>
+  <div class="container-login">
+    <v-container
+      class="fill-height"
+      fluid
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      ">
+      <v-card
+        variant="tonal"
+        width="100%"
+        max-width="400px"
+        class="pa-6 card-login"
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background-color: #d9d9d9;
+          border-radius: 16px;
+          border: #fff 1px solid;
+        ">
+        <v-card-title>LOGIN</v-card-title>
+        <v-text-field
+          v-model="email"
+          label="Digite seu E-mail"
+          variant="solo-filled"
+          class="mb-4"
+          density="comfortable"
+          style="width: 80%; position: relative"
+          hide-details />
 
-                        <v-form>
-                            <v-row>
-                                <v-col cols="12">
-                                <v-text-field
-                                    class="my-4"
-                                    bg-color="#D9D9D9"
-                                    variant="solo"
-                                    label="Digite seu e-mail"
-                                />
-                                <v-text-field
-                                    class="my-4"
-                                    bg-color="#D9D9D9"
-                                    variant="solo"
-                                    label="Digite sua senha"
-                                    type="password"
-                                />
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="12" md="4" offset-md="4">
-                                    <v-btn class="my-2 bg-light-green-accent-3 text-white font-weight-bold" elevation="0" variant="outlined" size="large">Enviar</v-btn>
-                                </v-col>
-                            </v-row>
-                        </v-form>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-container>
-    </v-main>
+        <v-text-field
+          v-model="senha"
+          label="Digite sua Senha"
+          variant="solo-filled"
+          class="mb-4"
+          density="comfortable"
+          hide-details
+          style="width: 80%" />
+
+        <v-btn
+          @click="handleEnviarLogin"
+          class="white--text"
+          style="font-weight: 800; background-color: #26d403; color: #fff"
+          block>
+          Enviar
+        </v-btn>
+      </v-card>
+    </v-container>
+  </div>
 </template>
 
-<style scoped>
-.bg-login {
-  background-image: url('../assets/images/loginBackground.jpg') ;
-  background-size: cover;
-  background-position: center;
-}
+<script setup>
+import { ref } from "vue";
 
-.gradientOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .6);
-  z-index: 0;
+const email = ref("");
+const senha = ref("");
+
+const verificaCampos = () => {
+  try {
+    if (!email.value || !senha.value) {
+      alert("Preencha todos os campos!");
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Erro na verificação:", error);
+    return false;
+  }
+};
+const handleEnviarLogin = async () => {
+  if (!verificaCampos()) return;
+
+  try {
+    const resposta = await fetch("http://api/aqui", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email.value,
+        senha: senha.value,
+      }),
+    });
+
+    const dados = await resposta.json();
+
+    if (resposta.ok) {
+      console.log("Login realizado com sucesso:", dados);
+      // redirecionamento, token, etc.
+    } else {
+      console.error("Erro ao fazer login:", dados.message || dados);
+    }
+  } catch (erro) {
+    console.error("Erro na requisição:", erro);
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  font-weight: bold;
+}
+.container-login {
+  background-image: url("../assets/login.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-login {
+  background-color: rgba(217, 217, 217, 0.034);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
 }
 </style>
