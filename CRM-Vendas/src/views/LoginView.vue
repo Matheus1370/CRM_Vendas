@@ -10,7 +10,7 @@
         text-align: center;
       ">
       <v-card
-        variant="tonal"
+        variant="outlined"
         width="100%"
         max-width="400px"
         class="pa-6 card-login"
@@ -19,7 +19,7 @@
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          background-color: #d9d9d9;
+          background-color: rgba(0, 0, 0, 0.05);
           border-radius: 16px;
           border: #fff 1px solid;
         ">
@@ -96,8 +96,8 @@ const handleEnviarLogin = async () => {
     } else {
       console.error("Erro ao fazer login:", dados.message || dados);
     }
-  } catch (erro) {
-    console.error("Erro na requisição:", erro);
+  } catch (error) {
+    console.error("Erro na requisição:", error);
   }
 };
 </script>
