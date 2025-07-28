@@ -1,53 +1,82 @@
 <template>
-    <v-layout>
-        <DrawerComponent></DrawerComponent>
-        <v-main>
-            <v-row>
-                <v-col cols="12">
-                    <v-container>
-                        <v-card class="text-h5" prepend-icon="mdi-hand-wave" variant="text">
-                            <template v-slot:title>
-                                <span class="text-h3 ml-1">Bem-vindo(a)</span>
-                            </template>
-                            <v-card-text class="text-h6">Veja todos os seus resultados em um só lugar</v-card-text>
-                        </v-card>
-                    </v-container>
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col cols="10">
-                    <v-container class="pl-10 pt-0">
-                        <v-card class="bg-grey-darken-1 mb-2 rounded-xl" min-height="300">
-                            <v-card-title>Graphic 1</v-card-title>
-                        </v-card>
-                        <v-card class="bg-grey-darken-1 mb-2 rounded-xl" min-height="300">
-                            <v-card-title>Graphic 2</v-card-title>
-                        </v-card>
-                        <v-card class="bg-grey-darken-1 mb-2 rounded-xl" min-height="300">
-                            <v-card-title>Graphic 3</v-card-title>
-                        </v-card>
-                        <v-card class="bg-grey-darken-1 mb-2 rounded-xl" min-height="300">
-                            <v-card-title>Graphic 4</v-card-title>
-                        </v-card>
-                    </v-container>
-                </v-col>
-                <v-col cols="2">
-                    <v-card class="bg-grey-darken-1 rounded-xl" height="96vh" width="250">
-                        <v-card-title>
-                            Aside 
-                        </v-card-title>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-main>
-    </v-layout>
-    
+  <v-main>
+    <DrawerComponent></DrawerComponent>
+    <v-container>
+      <v-row>
+        <v-col cols="12" md="8" class="pa-6">
+          <h4 class="text-h6 text-grey-darken-1">Visão geral</h4>
+          <h1 class="text-h4 font-weight-bold">Bem-vindo ao Painel</h1>
+        </v-col>
+      </v-row>
 
+      <v-row align="center" class="mt-4" style="justify-content: space-between">
+        <v-col cols="12" md="auto">
+          <v-card flat color="blue-lighten-5" rounded="lg" width="fit-content">
+            <v-btn-toggle
+              v-model="toggle"
+              mandatory
+              color="primary"
+              divided
+              class="toggle-minimal"
+              bg-color="blue-lighten-5">
+              <v-btn value="weekly" size="small" variant="plain" class="px-9">
+                Semanal
+              </v-btn>
+              <v-btn value="monthly" size="small" variant="plain" class="px-9">
+                Mensal
+              </v-btn>
+              <v-btn value="yearly" size="small" variant="plain" class="px-9">
+                Anual
+              </v-btn>
+            </v-btn-toggle>
+          </v-card>
+        </v-col>
+
+        <v-col cols="12" md="auto" class="text-right">
+          <v-btn color="primary" variant="flat" class="text-white"
+            >Download</v-btn
+          >
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
+
 <script setup>
 import { ref } from "vue";
 import DrawerComponent from "../components/DrawerComponent.vue";
-</script>
-<style scoped>
 
+const toggle = ref("weekly");
+</script>
+
+<style scoped>
+.v-btn--active {
+  background-color: white !important;
+  color: #1976d2 !important;
+  box-shadow: 0 1px 3px rgba(25, 118, 210, 0.2);
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.toggle-minimal {
+  gap: 2px;
+  padding: 4px;
+}
+
+.v-btn:hover:not(.v-btn--active) {
+  opacity: 0.8;
+  background-color: transparent !important;
+  color: #1976d2 !important;
+}
+
+.v-btn {
+  font-size: 0.8rem;
+  letter-spacing: normal;
+  min-width: auto;
+  transition: all 0.2s ease;
+}
+
+.v-card {
+  border: 1px solid #e3f2fd;
+}
 </style>
